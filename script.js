@@ -35,6 +35,9 @@ function showQuestion() {
     // Mélanger les options de réponse
     shuffleArray(choices);
 
+    // Afficher la question
+    document.getElementById('question').textContent = `Quelle est la capitale de ${country.name.common} ?`;
+
     const choicesContainer = document.getElementById('choices');
     choicesContainer.innerHTML = '';
 
