@@ -3,7 +3,7 @@ let currentQuestion = 0;
 let score = 0;
 const maxQuestions = 10;
 
-fetch('https://restcountries.com/v3.1/all')
+fetch('https://restcountries.com/v3.1/all?fields=name,capital&lang=fr')
     .then(response => response.json())
     .then(data => {
         countries = data;
@@ -59,12 +59,28 @@ function getRandomCapitals(count, validCountries) {
 }
 
 function checkAnswer(selected, correct) {
+    const buttons = document.querySelectorAll('button');
+    
+    // Appliquer les couleurs sur les boutons en fonction de la réponse
+    buttons.forEach(button => {
+        if (button.textContent === correct) {
+            button.style.backgroundColor = 'green'; // Bonne réponse en vert
+        } else if (button.textContent === selected) {
+            button.style.backgroundColor = 'red'; // Mauvaise réponse en rouge
+        }
+        button.disabled = true; // Désactiver les boutons après une réponse
+    });
+
     if (selected === correct) {
-        score++;
+        score++; // Incrémenter le score si la réponse est correcte
     }
-    document.getElementById('score').textContent = `Score: ${score}`;
-    currentQuestion++;
-    showQuestion();
+
+    document.getElementById('score').textContent = `Score: ${score}`; // Mettre à jour l'affichage du score
+
+    setTimeout(() => {
+        currentQuestion++;
+        showQuestion(); // Passer à la question suivante après un court délai
+    }, 1000); // Pause d'une seconde avant de passer à la question suivante
 }
 
 function endQuiz() {
